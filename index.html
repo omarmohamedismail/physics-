@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wave Properties of a Particle — Formula Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark: #080c18;
+    --blue: #2979ff;
+    --cyan: #00e5ff;
+    --pink: #ff4081;
+    --gold: #ffca28;
+    --green: #00e676;
+    --purple: #d500f9;
+    --card: rgba(255,255,255,0.035);
+    --border: rgba(255,255,255,0.07);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--dark);
+    font-family: 'Oxanium', sans-serif;
+    color: #dde4ff;
+    min-height: 100vh;
+    padding: 20px 16px 40px;
+    background-image:
+      radial-gradient(ellipse at 10% 10%, rgba(41,121,255,0.1) 0%, transparent 55%),
+      radial-gradient(ellipse at 90% 90%, rgba(213,0,249,0.08) 0%, transparent 55%);
+  }
+
+  /* ── HEADER ── */
+  header { text-align:center; padding: 36px 0 24px; }
+
+  .badge {
+    display: inline-block;
+    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    padding: 5px 18px; border-radius: 20px;
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    color: #fff; margin-bottom: 16px;
+  }
+
+  header h1 {
+    font-size: clamp(20px, 5vw, 34px);
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--cyan), var(--blue), var(--purple));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.3; margin-bottom: 6px;
+  }
+
+  header p { font-size: 12px; color: rgba(255,255,255,0.3); }
+
+  .rule {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blue), var(--purple), transparent);
+    margin: 18px 0 28px;
+  }
+
+  /* ── SECTION ── */
+  .sec-title {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 15px; font-weight: 800;
+    margin: 28px 0 14px;
+  }
+
+  .sec-icon {
+    width: 34px; height: 34px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; flex-shrink: 0;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    position: relative; overflow: hidden;
+    transition: border-color .2s, transform .2s;
+  }
+  .card:hover { transform: translateY(-1px); }
+
+  .card::before {
+    content:''; position:absolute;
+    right:0; top:0; bottom:0; width:3px;
+    border-radius: 0 14px 14px 0;
+  }
+
+  /* stripe colors */
+  .p-card::before  { background: linear-gradient(180deg, var(--blue), var(--cyan)); }
+  .e-card::before  { background: linear-gradient(180deg, var(--pink), var(--purple)); }
+  .c-card::before  { background: linear-gradient(180deg, var(--gold), #ff8f00); }
+  .f-card::before  { background: linear-gradient(180deg, #ff6d00, var(--pink)); }
+
+  .card-label {
+    font-size: 11px; font-weight: 700;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 6px;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .num {
+    background: rgba(255,255,255,0.08);
+    width: 20px; height: 20px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 900;
+  }
+
+  .eq {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(16px, 4vw, 24px);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+
+  .note {
+    font-size: 11px; color: rgba(255,255,255,0.4);
+    text-align: center; line-height: 1.5;
+  }
+  .note b { color: rgba(255,255,255,0.75); }
+
+  /* color per section */
+  .p-eq  { color: var(--cyan); }
+  .e-eq  { color: #ff80ab; }
+  .c-eq  { color: var(--gold); }
+  .f-eq  { color: #ffab40; }
+
+  /* ── GRID ── */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media(max-width:480px){ .grid2{ grid-template-columns:1fr; } }
+
+  /* ── COMPOUND CARDS ── */
+  .compound {
+    background: linear-gradient(135deg, rgba(255,202,40,.06), rgba(255,143,0,.04));
+    border: 1px solid rgba(255,202,40,.2);
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+
+  .compound-title {
+    font-size: 12px; font-weight: 800;
+    color: var(--gold);
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 7px;
+  }
+
+  .steps { display: flex; flex-direction: column; gap: 7px; }
+
+  .step {
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .step-eq {
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(255,202,40,.1);
+    color: var(--gold);
+    padding: 6px 14px; border-radius: 8px;
+    font-size: clamp(12px, 3vw, 15px);
+    font-weight: 700; flex: 1; text-align: center;
+  }
+
+  .arr { color: rgba(255,202,40,.5); font-size: 18px; }
+  .step-note { font-size: 10px; color: rgba(255,255,255,.4); min-width: 80px; }
+
+  /* ── COMPARE TABLE ── */
+  .table { border-radius: 14px; overflow: hidden; border: 1px solid var(--border); }
+
+  .t-head {
+    display: grid; grid-template-columns: 1fr 1.3fr 1.3fr;
+    background: linear-gradient(135deg, rgba(0,229,255,.12), rgba(213,0,249,.12));
+  }
+
+  .t-head div { padding: 12px 10px; font-weight: 800; font-size: 13px; text-align: center; }
+  .t-head .eh { color: #ff80ab; }
+  .t-head .ph { color: var(--cyan); }
+  .t-head .rh { color: rgba(255,255,255,.45); }
+
+  .t-row {
+    display: grid; grid-template-columns: 1fr 1.3fr 1.3fr;
+    border-top: 1px solid var(--border);
+    transition: background .2s;
+  }
+  .t-row:hover { background: rgba(255,255,255,.025); }
+
+  .t-row div {
+    padding: 10px 8px; font-size: 11px;
+    text-align: center;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .t-row .rp {
+    color: rgba(255,255,255,.4); font-weight: 700; font-size: 10px;
+    border-left: 1px solid var(--border);
+    background: rgba(255,255,255,.02);
+  }
+  .t-row .ev { color: #ff80ab; font-weight: 600; border-left: 1px solid var(--border); }
+  .t-row .pv { color: var(--cyan); font-weight: 600; }
+
+  .chip {
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(255,255,255,.08);
+    padding: 2px 7px; border-radius: 5px;
+    font-size: 10px;
+  }
+
+  /* ── LEGEND ── */
+  .legend {
+    background: rgba(255,255,255,.03);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px; margin-top: 20px;
+  }
+
+  .legend-title {
+    font-size: 11px; font-weight: 800;
+    color: rgba(255,255,255,.4);
+    text-align: center; letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  .legend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(145px,1fr));
+    gap: 7px;
+  }
+
+  .leg-item { display:flex; align-items:center; gap:8px; font-size:11px; }
+
+  .leg-sym {
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(41,121,255,.15);
+    color: var(--cyan);
+    font-weight: 700; padding: 3px 8px;
+    border-radius: 6px; min-width: 30px; text-align: center;
+  }
+
+  .leg-desc { color: rgba(255,255,255,.4); font-size: 10px; }
+
+  /* ── MASTER BOX ── */
+  .master {
+    text-align: center;
+    padding: 22px;
+    background: linear-gradient(135deg, rgba(0,229,255,.07), rgba(213,0,249,.07));
+    border: 1px solid rgba(0,229,255,.2);
+    border-radius: 18px;
+    margin-top: 28px;
+  }
+
+  .master p { font-size: 11px; color: rgba(255,255,255,.35); margin-bottom: 10px; }
+
+  .master .big {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(13px, 3vw, 19px);
+    font-weight: 700; color: #fff;
+  }
+
+  .master .big span { color: var(--cyan); }
+
+  footer { text-align:center; padding: 28px 0 8px; font-size:10px; color: rgba(255,255,255,.15); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="badge">UNIT 02 · CHAPTER 5 · LESSON 4</div>
+  <h1>⚛️ Wave Properties of a Particle</h1>
+  <p>Mr. omar mohamed ismail — Complete Formula Sheet</p>
+</header>
+<div class="rule"></div>
+
+<!-- ══════════ PHOTON ══════════ -->
+<div class="sec-title">
+  <div class="sec-icon" style="background:linear-gradient(135deg,var(--blue),var(--cyan))">💡</div>
+  <span style="color:var(--cyan)">Photon Formulas</span>
+</div>
+
+<div class="grid2">
+  <div class="card p-card">
+    <div class="card-label"><div class="num">1</div> Energy</div>
+    <div class="eq p-eq">E = hν</div>
+    <div class="note"><b>h</b> = Planck's const | <b>ν</b> = frequency</div>
+  </div>
+  <div class="card p-card">
+    <div class="card-label"><div class="num">2</div> Relativistic Mass</div>
+    <div class="eq p-eq">m = E/c²</div>
+    <div class="note">= hν/c² = h/cλ</div>
+  </div>
+  <div class="card p-card">
+    <div class="card-label"><div class="num">3</div> Linear Momentum</div>
+    <div class="eq p-eq">P<sub>L</sub> = mc = E/c</div>
+    <div class="note">= hν/c = h/λ</div>
+  </div>
+  <div class="card p-card">
+    <div class="card-label"><div class="num">4</div> Wavelength</div>
+    <div class="eq p-eq">λ = c/ν = h/P<sub>L</sub></div>
+    <div class="note">= hc/E</div>
+  </div>
+  <div class="card p-card">
+    <div class="card-label"><div class="num">5</div> Radiation Force</div>
+    <div class="eq p-eq">F = 2P<sub>w</sub>/c</div>
+    <div class="note"><b>P<sub>w</sub></b> = power of light (Watts)</div>
+  </div>
+  <div class="card p-card">
+    <div class="card-label"><div class="num">6</div> Photon Rate</div>
+    <div class="eq p-eq">P<sub>w</sub> = nhν/t</div>
+    <div class="note"><b>n</b> = number of photons per second</div>
+  </div>
+</div>
+
+<div class="card p-card" style="margin-top:4px;">
+  <div class="card-label" style="justify-content:center"><div class="num">★</div> Combined Photon Chain</div>
+  <div class="eq p-eq" style="font-size:clamp(11px,2.8vw,16px)">P<sub>L</sub> = mc = E/c = hν/c = h/λ</div>
+</div>
+
+<!-- ══════════ ELECTRON ══════════ -->
+<div class="sec-title" style="margin-top:18px;">
+  <div class="sec-icon" style="background:linear-gradient(135deg,var(--pink),var(--purple))">⚡</div>
+  <span style="color:#ff80ab">Electron Formulas</span>
+</div>
+
+<div class="grid2">
+  <div class="card e-card">
+    <div class="card-label"><div class="num">1</div> Kinetic Energy</div>
+    <div class="eq e-eq">K.E. = ½mv²</div>
+    <div class="note">= <b>eV</b> &nbsp;(V = potential difference)</div>
+  </div>
+  <div class="card e-card">
+    <div class="card-label"><div class="num">2</div> Velocity</div>
+    <div class="eq e-eq">v = √(2eV/m)</div>
+    <div class="note">derived from K.E. = eV</div>
+  </div>
+  <div class="card e-card">
+    <div class="card-label"><div class="num">3</div> Linear Momentum</div>
+    <div class="eq e-eq">P<sub>L</sub> = mv</div>
+    <div class="note">v = velocity of electron</div>
+  </div>
+  <div class="card e-card">
+    <div class="card-label"><div class="num">4</div> De Broglie λ</div>
+    <div class="eq e-eq">λ = h/mv = h/P<sub>L</sub></div>
+    <div class="note">Matter Wave</div>
+  </div>
+</div>
+
+<div class="card e-card">
+  <div class="card-label" style="justify-content:center"><div class="num">★</div> Electron accelerated through voltage V</div>
+  <div class="eq e-eq" style="font-size:clamp(14px,3.5vw,22px)">λ = h / √(2meV)</div>
+  <div class="note">Combined: λ = h/mv &amp; v = √(2eV/m)</div>
+</div>
+
+<div class="card e-card">
+  <div class="card-label" style="justify-content:center"><div class="num">★</div> Wavelength ratio for two bodies</div>
+  <div class="eq e-eq" style="font-size:clamp(13px,3vw,20px)">λ₂/λ₁ = m₁v₁ / m₂v₂</div>
+  <div class="note">mass m₁ at v₁ &nbsp;|&nbsp; mass m₂ at v₂</div>
+</div>
+
+<!-- ══════════ FORCE & POWER ══════════ -->
+<div class="sec-title" style="margin-top:18px;">
+  <div class="sec-icon" style="background:linear-gradient(135deg,#ff6d00,var(--pink))">💥</div>
+  <span style="color:#ffab40">Force &amp; Power of Light</span>
+</div>
+
+<div class="grid2">
+  <div class="card f-card">
+    <div class="card-label"><div class="num">1</div> Force (basic)</div>
+    <div class="eq f-eq">F = n × 2hν/c</div>
+    <div class="note"><b>n</b> = photon rate (photons/s)</div>
+  </div>
+  <div class="card f-card">
+    <div class="card-label"><div class="num">2</div> Force (power form)</div>
+    <div class="eq f-eq">F = 2P<sub>w</sub>/c</div>
+    <div class="note">easiest form for problems</div>
+  </div>
+  <div class="card f-card">
+    <div class="card-label"><div class="num">3</div> Light Power</div>
+    <div class="eq f-eq">P<sub>w</sub> = nhν/t</div>
+    <div class="note">= E/t</div>
+  </div>
+  <div class="card f-card">
+    <div class="card-label"><div class="num">4</div> Graph Slope (P<sub>w</sub> vs F)</div>
+    <div class="eq f-eq">slope = P<sub>w</sub>/F = c/2</div>
+    <div class="note">= 1.5×10⁸ m/s</div>
+  </div>
+</div>
+
+<!-- ══════════ COMPOUND FORMULAS ══════════ -->
+<div class="sec-title" style="margin-top:18px;">
+  <div class="sec-icon" style="background:linear-gradient(135deg,var(--gold),#ff8f00)">🔗</div>
+  <span style="color:var(--gold)">Derived / Combined Formulas</span>
+</div>
+
+<div class="compound">
+  <div class="compound-title">① Photon: From Energy → Wavelength</div>
+  <div class="steps">
+    <div class="step"><div class="step-eq">E = hν = hc/λ</div></div>
+    <div class="step"><span class="arr">→</span><div class="step-eq">λ = hc/E</div><div class="step-note">if E is given</div></div>
+    <div class="step"><span class="arr">→</span><div class="step-eq">λ = h/P<sub>L</sub></div><div class="step-note">if P<sub>L</sub> is given</div></div>
+  </div>
+</div>
+
+<div class="compound">
+  <div class="compound-title">② Electron: From Voltage V → Wavelength</div>
+  <div class="steps">
+    <div class="step"><div class="step-eq">K.E. = eV = ½mv²</div></div>
+    <div class="step"><span class="arr">→</span><div class="step-eq">v = √(2eV/m)</div></div>
+    <div class="step"><span class="arr">→</span><div class="step-eq">λ = h/mv = h/√(2meV)</div><div class="step-note">⬅ Final combined</div></div>
+  </div>
+</div>
+
+<div class="compound">
+  <div class="compound-title">③ Energy ↔ Momentum ↔ Wavelength (Photon)</div>
+  <div class="steps">
+    <div class="step"><div class="step-eq">E = P<sub>L</sub> × c = hν</div></div>
+    <div class="step"><div class="step-eq">P<sub>L</sub> = E/c = h/λ = hν/c</div></div>
+    <div class="step"><div class="step-eq">m = E/c² = P<sub>L</sub>/c = h/cλ</div></div>
+  </div>
+</div>
+
+<div class="compound">
+  <div class="compound-title">④ Force from Photon Rate or Power</div>
+  <div class="steps">
+    <div class="step"><div class="step-eq">P<sub>w</sub> = n·hν / t</div></div>
+    <div class="step"><div class="step-eq">F = 2·(hν/c)·Φ = 2mcΦ</div></div>
+    <div class="step"><span class="arr">→</span><div class="step-eq">F = 2P<sub>w</sub>/c</div><div class="step-note">⬅ Use this in problems</div></div>
+  </div>
+</div>
+
+<!-- ══════════ COMPARE TABLE ══════════ -->
+<div class="sec-title" style="margin-top:18px;">
+  <div class="sec-icon" style="background:linear-gradient(135deg,var(--green),var(--cyan))">⚖️</div>
+  <span style="color:var(--green)">Electron vs Photon — Comparison</span>
+</div>
+
+<div class="table">
+  <div class="t-head">
+    <div class="rh">Property</div>
+    <div class="eh">⚡ Electron</div>
+    <div class="ph">💡 Photon</div>
+  </div>
+  <div class="t-row">
+    <div class="rp">Nature</div>
+    <div class="ev">Charged particle + wave</div>
+    <div class="pv">EM wave + particle</div>
+  </div>
+  <div class="t-row">
+    <div class="rp">Charge</div>
+    <div class="ev">Negative (−e)</div>
+    <div class="pv">No charge</div>
+  </div>
+  <div class="t-row">
+    <div class="rp">Energy</div>
+    <div class="ev"><span class="chip">K.E. = ½mv² = eV</span></div>
+    <div class="pv"><span class="chip">E = hν</span></div>
+  </div>
+  <div class="t-row">
+    <div class="rp">Momentum P<sub>L</sub></div>
+    <div class="ev"><span class="chip">P = mv</span></div>
+    <div class="pv"><span class="chip">P = mc = E/c</span></div>
+  </div>
+  <div class="t-row">
+    <div class="rp">Mass</div>
+    <div class="ev"><span class="chip">9.1×10⁻³¹ kg</span></div>
+    <div class="pv"><span class="chip">m = E/c²</span></div>
+  </div>
+  <div class="t-row">
+    <div class="rp">Wavelength λ</div>
+    <div class="ev"><span class="chip">λ = h/mv</span></div>
+    <div class="pv"><span class="chip">λ = h/mc = c/ν</span></div>
+  </div>
+  <div class="t-row">
+    <div class="rp">At rest (v=0)</div>
+    <div class="ev">P<sub>L</sub> = 0 &nbsp;|&nbsp; m constant</div>
+    <div class="pv">Cannot be at rest</div>
+  </div>
+  <div class="t-row">
+    <div class="rp">Acceleration</div>
+    <div class="ev" style="color:var(--green)">✅ Can be accelerated</div>
+    <div class="pv" style="color:var(--pink)">❌ Cannot</div>
+  </div>
+  <div class="t-row">
+    <div class="rp">E/M Field</div>
+    <div class="ev" style="color:var(--green)">✅ Affected</div>
+    <div class="pv" style="color:var(--pink)">❌ Not affected</div>
+  </div>
+</div>
+
+<!-- ══════════ LEGEND ══════════ -->
+<div class="legend">
+  <div class="legend-title">🔑 SYMBOL REFERENCE</div>
+  <div class="legend-grid">
+    <div class="leg-item"><span class="leg-sym">h</span><span class="leg-desc">Planck's const = 6.63×10⁻³⁴ J·s</span></div>
+    <div class="leg-item"><span class="leg-sym">ν</span><span class="leg-desc">Photon frequency (Hz)</span></div>
+    <div class="leg-item"><span class="leg-sym">λ</span><span class="leg-desc">Wavelength (m)</span></div>
+    <div class="leg-item"><span class="leg-sym">c</span><span class="leg-desc">Speed of light = 3×10⁸ m/s</span></div>
+    <div class="leg-item"><span class="leg-sym">P<sub>L</sub></span><span class="leg-desc">Linear momentum (kg·m/s)</span></div>
+    <div class="leg-item"><span class="leg-sym">P<sub>w</sub></span><span class="leg-desc">Light power (Watt)</span></div>
+    <div class="leg-item"><span class="leg-sym">m</span><span class="leg-desc">Mass (kg)</span></div>
+    <div class="leg-item"><span class="leg-sym">e</span><span class="leg-desc">Electron charge = 1.6×10⁻¹⁹ C</span></div>
+    <div class="leg-item"><span class="leg-sym">V</span><span class="leg-desc">Potential difference (Volt)</span></div>
+    <div class="leg-item"><span class="leg-sym">Φ</span><span class="leg-desc">Photon rate (photon/s)</span></div>
+    <div class="leg-item"><span class="leg-sym">v</span><span class="leg-desc">Electron velocity (m/s)</span></div>
+    <div class="leg-item"><span class="leg-sym">F</span><span class="leg-desc">Force (Newton)</span></div>
+  </div>
+</div>
+
+<!-- MASTER -->
+<div class="master">
+  <p>Master identity — both electron &amp; photon have dual nature</p>
+  <div class="big">
+    <span>C = λ × ν</span> &nbsp;|&nbsp; λ = h/P<sub>L</sub> &nbsp;|&nbsp; E = hν = P<sub>L</sub>×c
+  </div>
+</div>
+
+<footer>Mr. Ahmed Samir Physics &nbsp;|&nbsp; Unit 02 — Chapter 5 — Lesson Four &nbsp;|&nbsp; Wave Properties of a Particle</footer>
+
+</body>
+</html>
